@@ -244,7 +244,7 @@ public:
     
     // These low-level calls give the caller responsibility for maintaining the integrity of the tree.
     void setPreviousSibling(Node* previous) { m_previous = previous; }
-#if ENABLE(PLD_DOM_TRAVERSAL)
+#ifdef __ARM_USE_PLD
     ALWAYS_INLINE void updatePrefetchTarget() {
         if (m_next) {
             int skew;
@@ -425,7 +425,7 @@ public:
     Node* traverseNextNodeFastPath() const { prefetchTarget(); return m_nextNode; }
 
     ALWAYS_INLINE void prefetchTarget() const {
-#if ENABLE(PLD_DOM_TRAVERSAL)
+#ifdef __ARM_USE_PLD
         if (m_prefetch) {
             __builtin_prefetch(((char *) m_prefetch));
             __builtin_prefetch(((char *) m_prefetch) + 64);
@@ -741,7 +741,7 @@ private:
     Document* m_document;
     Node* m_previous;
     Node* m_next;
-#if ENABLE(PLD_DOM_TRAVERSAL)
+#ifdef __ARM_USE_PLD
     Node* m_prefetch;
 #endif
     RenderObject* m_renderer;

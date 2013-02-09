@@ -1434,7 +1434,7 @@ inline Node::Node(Document* document, ConstructionType type)
     : m_document(document)
     , m_previous(0)
     , m_next(0)
-#if ENABLE(PLD_DOM_TRAVERSAL)
+#ifdef __ARM_USE_PLD
     , m_prefetch(0)
 #endif
     , m_renderer(0)
